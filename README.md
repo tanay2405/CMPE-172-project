@@ -28,12 +28,7 @@ The Student Tutoring Service is an online appointment scheduling system where st
 - Under SDK, select Java 17 and SDK default for language level
 - Click apply and OK
 
-3. Mark Sources Root
-
-- Right click the src/main/java folder
-- Select Mark Directory as Sources Root
-
-4. Set Up MySQL
+3. Set Up MySQL
 
 Open MySQL and run:
 
@@ -45,7 +40,7 @@ Open src/main/resources/application.properties and update with your own mySQL pa
 
 Now the tables and data from the database.sql file will be created automatically
 
-5. Run the App
+4. Run the App
 
 - Open StudentTutoringServiceApplication.java
 - Click the play button next to the main method
