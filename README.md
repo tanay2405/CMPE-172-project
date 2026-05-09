@@ -37,17 +37,18 @@ The Student Tutoring Service is an online appointment scheduling system where st
 
 Open MySQL and run:
 
-sql  CREATE DATABASE tutoring_service;
+- CREATE DATABASE tutoring_service;
 
 Open src/main/resources/application.properties and update with your own mySQL password:
 
-  spring.datasource.password=YOUR_MYSQL_PASSWORD
+- spring.datasource.password=YOUR_MYSQL_PASSWORD
 
 Now the tables and data from the database.sql file will be created automatically
 
 5. Run the App
 
 Open StudentTutoringServiceApplication.java
+
 Click the play button next to the main method
 
 Run the app on http://localhost:8080
