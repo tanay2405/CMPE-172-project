@@ -47,8 +47,6 @@ Now the tables and data from the database.sql file will be created automatically
 
 5. Run the App
 
-Open StudentTutoringServiceApplication.java
-
-Click the play button next to the main method
-
-Run the app on http://localhost:8080
+- Open StudentTutoringServiceApplication.java
+- Click the play button next to the main method
+- Run the app on http://localhost:8080
