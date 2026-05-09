@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Tutoring Sessions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: steelblue;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 20px auto;
+            width: 80%;
+        }
+        .search-bar input {
+            width: 80%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid gray;
+            border-radius: 4px 0 0 4px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: steelblue;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px gray;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid gray;
+            text-align: center;
+        }
+        th {
+            background-color: mediumpurple;
+            color: white;
+        }
+        .btn {
+            padding: 6px 16px;
+            background-color: steelblue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div>
+        <a href="/slots">View Appointments</a>
+        <a href="/myAppointments">My Appointments</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+<h1>Book a Tutoring Session</h1>
+
+<div class="search-bar">
+    <form th:action="@{/slots}" method="get" style="display:flex; width:100%;">
+        <input type="text" name="search" placeholder="Filter by Subject, Tutor, or Time"
+               th:value="${search}" style="width:80%; padding:10px; border:1px solid gray; border-radius:4px 0 0 4px;"/>
+        <button type="submit" style="padding:10px 20px; background-color:steelblue; color:white; border:none; border-radius:0 4px 4px 0; cursor:pointer; font-weight:bold;">Search</button>
+    </form>
+</div>
+
+<table>
+    <tr>
+        <th>Tutor</th>
+        <th>Subject</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Capacity</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="slot : ${slots}">
+        <td th:text="${slot.tutorName}"></td>
+        <td th:text="${slot.subject}"></td>
+        <td th:text="${slot.startTime}"></td>
+        <td th:text="${slot.endTime}"></td>
+        <td th:text="${slot.bookedCount} + '/' + ${slot.capacity} + ' seats'"></td>
+        <td th:text="${slot.status}"></td>
+        <td>
+            <form th:action="@{/bookAppointment}" method="get">
+                <input type="hidden" name="slotID" th:value="${slot.slotID}" />
+                <input type="hidden" name="tutorName" th:value="${slot.tutorName}" />
+                <input type="hidden" name="subject" th:value="${slot.subject}" />
+                <input type="hidden" name="startTime" th:value="${slot.startTime}" />
+                <input type="hidden" name="endTime" th:value="${slot.endTime}" />
+                <button type="submit" class="btn"
+                        th:disabled="${slot.status == 'BOOKED'}"
+                        th:text="${slot.status == 'BOOKED'} ? 'FULL' : 'Book Now'">
+                </button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

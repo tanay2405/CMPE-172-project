@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tutor Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: steelblue;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px gray;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid gray;
+            text-align: center;
+        }
+        th {
+            background-color: mediumpurple;
+            color: white;
+        }
+        .form-container {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: lightgray;
+            border-radius: 8px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid gray;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: steelblue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .cancel-btn {
+            padding: 6px 16px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .no-slots {
+            text-align: center;
+            color: gray;
+            margin-top: 20px;
+        }
+        .student-list {
+            font-size: 13px;
+            color: gray;
+        }
+        .success-banner {
+            background-color: lightgreen;
+            text-align: center;
+            padding: 15px;
+            margin: 20px auto;
+            width: 50%;
+            border-radius: 8px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<!-- Success banner after cancelling a slot -->
+<div th:if="${param.cancelled}" class="success-banner">
+    Slot cancelled successfully. Notifications sent to all booked students.
+</div>
+
+<h1 th:text="'Welcome, ' + ${userName}"></h1>
+
+<!-- Add New Slot Form -->
+<h2>Add New Availability Slot</h2>
+<div class="form-container">
+    <form th:action="@{/addSlot}" method="post">
+        <input type="text" name="subject" placeholder="Subject (e.g. CMPE, Math, CS)" required />
+        <input type="text" name="startTime" placeholder="Start Time (e.g. 3:00 PM)" required />
+        <input type="text" name="endTime" placeholder="End Time (e.g. 4:00 PM)" required />
+        <input type="number" name="capacity" placeholder="Capacity (e.g. 5)" min="1" required />
+        <button type="submit" class="btn">Add Slot</button>
+    </form>
+</div>
+
+<!-- My Slots Table -->
+<h2>My Availability Slots</h2>
+
+<div th:if="${slots == null or #lists.isEmpty(slots)}">
+    <p class="no-slots">You have no availability slots yet.</p>
+</div>
+
+<table th:if="${slots != null and not #lists.isEmpty(slots)}">
+    <tr>
+        <th>Subject</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Capacity</th>
+        <th>Booked</th>
+        <th>Status</th>
+        <th>Students Booked</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="slot : ${slots}">
+        <td th:text="${slot.subject}"></td>
+        <td th:text="${slot.startTime}"></td>
+        <td th:text="${slot.endTime}"></td>
+        <td th:text="${slot.capacity}"></td>
+        <td th:text="${slot.bookedCount}"></td>
+        <td th:text="${slot.status}"></td>
+        <td>
+            <div th:if="${studentMap[slot.slotID] != null and not #lists.isEmpty(studentMap[slot.slotID])}">
+                <span th:each="student, iter : ${studentMap[slot.slotID]}"
+                      class="student-list"
+                      th:text="${student} + (${iter.last} ? '' : ', ')"></span>
+            </div>
+            <div th:if="${studentMap[slot.slotID] == null or #lists.isEmpty(studentMap[slot.slotID])}">
+                <span class="student-list">No students yet</span>
+            </div>
+        </td>
+        <td>
+            <form th:action="@{/cancelSlot}" method="post">
+                <input type="hidden" name="slotID" th:value="${slot.slotID}" />
+                <button type="submit" class="cancel-btn">Cancel Slot</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

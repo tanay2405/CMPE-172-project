@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Booking Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: steelblue;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .banner {
+            background-color: lightgreen;
+            text-align: center;
+            padding: 20px;
+            margin: 30px auto;
+            width: 50%;
+            border-radius: 8px;
+            color: green;
+            font-weight: bold;
+        }
+        .details-box {
+            background-color: lightgray;
+            width: 40%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            background-color: goldenrod;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div>
+        <a href="/slots">View Appointments</a>
+        <a href="/myAppointments">My Appointments</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="banner">
+    <p th:text="${message}"></p>
+    <p th:if="${status == 'BOOKED'}">Notification sent to your email</p>
+    <p th:if="${status == 'CANCELLED'}">Cancellation notification sent to your email</p>
+</div>
+<div class="details-box">
+    <h3>Appointment Details:</h3>
+    <p th:text="'Status: ' + ${status}"></p>
+</div>
+
+<div class="btn-container">
+    <a href="/slots" class="btn">View More Appointments</a>
+    <a href="/myAppointments" class="btn">View My Appointments</a>
+</div>
+</body>
+</html>

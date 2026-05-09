@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Book Appointment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: steelblue;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        p {
+            text-align: center;
+            color: gray;
+        }
+        .details-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px auto;
+            width: 80%;
+        }
+        .box {
+            background-color: lightgray;
+            padding: 20px;
+            border-radius: 8px;
+            width: 45%;
+        }
+        .box h3 {
+            margin-top: 0;
+        }
+        .confirm-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 14px;
+            background-color: goldenrod;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div>
+        <a href="/slots">View Appointments</a>
+        <a href="/myAppointments">My Appointments</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+<h1>Book Appointment</h1>
+<p>Review all of the appointment details and confirm your reservation</p>
+
+<div class="details-container">
+    <div class="box">
+        <h3>Tutor Appointment Details:</h3>
+        <p th:text="'Tutor: ' + ${tutorName}"></p>
+        <p th:text="'Subject: ' + ${subject}"></p>
+        <p th:text="'Start Time: ' + ${startTime}"></p>
+        <p th:text="'End Time: ' + ${endTime}"></p>
+    </div>
+    <div class="box">
+        <h3>Student Info:</h3>
+        <p th:text="'Student Name: ' + ${userName}"></p>
+        <p th:text="'Student Email: ' + ${userEmail}"></p>
+    </div>
+</div>
+
+<form th:action="@{/book}" method="post">
+    <input type="hidden" name="slotID" th:value="${slotID}" />
+    <button type="submit" class="confirm-btn">Confirm Booking</button>
+</form>
+</body>
+</html>
