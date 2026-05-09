@@ -19,18 +19,18 @@ The Student Tutoring Service is an online appointment scheduling system where st
 
 1. Open the Project in IntelliJ
 
-- Go to File → Open and select the pom.xml file 
-- Choose Open as Project
-- Wait for Maven to finish downloading dependencies 
+- Right click the pom.xml file 
+- Choose Add as Maven Project and wait for Maven to finish downloading dependencies 
 
 2. Set the SDK if not set up already
 
 - Go to File → Project Structure 
-- Under SDK, select Java 17 and click apply and OK
+- Under SDK, select Java 17 and SDK default for language level
+- Click apply and OK
 
 3. Mark Sources Root
 
-- In the left panel, right click the src/main/java folder
+- Right click the src/main/java folder
 - Select Mark Directory as Sources Root
 
 4. Set Up MySQL
